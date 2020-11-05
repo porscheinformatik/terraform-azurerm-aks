@@ -9,6 +9,7 @@ on:
 jobs:
   validate:
     name: Validate
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         terraform-versions: ["0.12.x", "0.13.x"]
