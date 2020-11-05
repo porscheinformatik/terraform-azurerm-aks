@@ -101,3 +101,9 @@ variable "log_retention_in_days" {
   type        = number
   default     = 30
 }
+
+variable "outbound_ip_address_ids" {
+  type = set(string)
+  default = null
+  description = "(Optional) The ID of the Public IP Addresses which should be used for outbound communication for the cluster load balancer."
+}
