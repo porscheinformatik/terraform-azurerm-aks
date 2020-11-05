@@ -75,6 +75,7 @@ variable "admin_group_object_ids" {
 variable "namespaces" {
   description = "A list of namespaces to be created, owner is the username (e-mail) in AAD"
   type        = map(object({ owner = string }))
+  default     = {}
 }
 
 variable "tags" {
