@@ -43,5 +43,5 @@ output "kube_config_raw" {
 }
 
 output "identity" {
-  value = azurerm_kubernetes_cluster.identity
+  value = azurerm_kubernetes_cluster.main.identity
 }
