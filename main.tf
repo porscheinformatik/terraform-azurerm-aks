@@ -53,8 +53,11 @@ resource "azurerm_kubernetes_cluster" "main" {
   network_profile {
     network_plugin = "azure"
     network_policy = "azure"
-    load_balancer_profile {
-      outbound_ip_address_ids = var.outbound_ip_address_ids
+    dynamic "load_balancer_profile" {
+      for_each = var.outbound_ip_address_ids != null ? [1] : []
+      content {
+        outbound_ip_address_ids = var.outbound_ip_address_ids
+      }
     }
   }
 
