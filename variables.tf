@@ -27,7 +27,7 @@ variable "additional_node_pools" {
 
 variable "vm_size" {
   description = "VM size/type of the default node pool"
-  default     = "Standard_B2ms"
+  default     = "Standard_DS2_v2"
 }
 
 variable "node_count" {
