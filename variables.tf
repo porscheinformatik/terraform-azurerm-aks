@@ -32,7 +32,8 @@ variable "vm_size" {
 
 variable "node_count" {
   description = "The number of nodes that should exist in the default node pool"
-  default     = 2
+  type        = number
+  default     = null
 }
 
 variable "vnet_subnet_id" {
@@ -48,11 +49,13 @@ variable "enable_auto_scaling" {
 
 variable "min_count" {
   description = "Min auto scaling node count for the default node pool"
+  type        = number
   default     = null
 }
 
 variable "max_count" {
   description = "Max auto scaling node count for the default node pool"
+  type        = number
   default     = null
 }
 
