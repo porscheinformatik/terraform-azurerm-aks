@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        terraform-versions: ["0.12.x", "0.13.x"]
+        terraform-versions: ["0.13.x", "0.14.x"]
 
     steps:
       - name: Checkout
