@@ -21,6 +21,8 @@ variable "additional_node_pools" {
     min_count           = number
     max_count           = number
     vnet_subnet_id      = string
+    os_disk_type        = string
+    os_disk_size_gb     = number
   }))
   default = {}
 }
@@ -28,6 +30,17 @@ variable "additional_node_pools" {
 variable "vm_size" {
   description = "VM size/type of the default node pool"
   default     = "Standard_DS2_v2"
+}
+
+variable "os_disk_size_gb" {
+  description = "The Agent Operating System disk size in GB. Changing this forces a new resource to be created."
+  type        = number
+}
+
+variable "os_disk_type" {
+  description = "The type of disk which should be used for the Operating System. Possible values are Ephemeral and Managed. Defaults to Managed. Changing this forces a new resource to be created."
+  type        = string
+  default     = "Managed"
 }
 
 variable "node_count" {
@@ -106,7 +119,7 @@ variable "log_retention_in_days" {
 }
 
 variable "outbound_ip_address_ids" {
-  type = set(string)
-  default = null
+  type        = set(string)
+  default     = null
   description = "(Optional) The ID of the Public IP Addresses which should be used for outbound communication for the cluster load balancer."
 }

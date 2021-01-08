@@ -23,6 +23,8 @@ resource "azurerm_kubernetes_cluster" "main" {
     min_count            = var.min_count
     max_count            = var.max_count
     availability_zones   = var.availability_zones
+    os_disk_type         = var.os_disk_type
+    os_disk_size_gb      = var.os_disk_size_gb
   }
 
   addon_profile {
@@ -76,6 +78,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "name" {
   enable_auto_scaling   = each.value.enable_auto_scaling
   min_count             = each.value.min_count
   max_count             = each.value.max_count
+  os_disk_type          = each.value.os_disk_type
+  os_disk_size_gb       = each.value.os_disk_size_gb
+
 }
 
 resource "azurerm_log_analytics_workspace" "main" {
