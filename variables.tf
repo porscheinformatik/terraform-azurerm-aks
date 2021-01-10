@@ -35,6 +35,7 @@ variable "vm_size" {
 variable "os_disk_size_gb" {
   description = "The Agent Operating System disk size in GB. Changing this forces a new resource to be created."
   type        = number
+  default     = null
 }
 
 variable "os_disk_type" {
