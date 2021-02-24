@@ -95,7 +95,6 @@ resource "azurerm_log_analytics_workspace" "main" {
 
 provider "kubernetes" {
   alias                  = "aks_k8s_provider"
-  load_config_file       = false
   host                   = azurerm_kubernetes_cluster.main.kube_admin_config.0.host
   username               = azurerm_kubernetes_cluster.main.kube_admin_config.0.username
   password               = azurerm_kubernetes_cluster.main.kube_admin_config.0.password
