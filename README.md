@@ -15,10 +15,5 @@ module "aks" {
   resource_group_name       = azurerm_resource_group.main.name
   resource_group_location   = azurerm_resource_group.main.location
   prefix                    = "poi-mygroup-dev"
-  namespaces = {
-    "poi-mygroup" = {
-      owner = "emailof.admin@porscheinformatik.com",
-    }
-  }
 }
 ```
