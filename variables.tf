@@ -124,3 +124,11 @@ variable "outbound_ip_address_ids" {
   default     = null
   description = "(Optional) The ID of the Public IP Addresses which should be used for outbound communication for the cluster load balancer."
 }
+
+variable "network_plugin" {
+  default = "kubenet"
+}
+
+variable "network_policy" {
+  default = "calico"
+}
