@@ -4,13 +4,15 @@ data "azurerm_kubernetes_service_versions" "current" {
 }
 
 resource "azurerm_kubernetes_cluster" "main" {
-  name                            = "${var.prefix}-aks"
-  location                        = var.resource_group_location
-  resource_group_name             = var.resource_group_name
-  dns_prefix                      = var.prefix
-  node_resource_group             = "${var.prefix}-worker-rg"
-  kubernetes_version              = var.kubernetes_version != null ? var.kubernetes_version : data.azurerm_kubernetes_service_versions.current.latest_version
-  api_server_authorized_ip_ranges = var.authorized_ip_ranges
+  name                              = "${var.prefix}-aks"
+  location                          = var.resource_group_location
+  resource_group_name               = var.resource_group_name
+  dns_prefix                        = var.prefix
+  node_resource_group               = "${var.prefix}-worker-rg"
+  kubernetes_version                = var.kubernetes_version != null ? var.kubernetes_version : data.azurerm_kubernetes_service_versions.current.latest_version
+  api_server_authorized_ip_ranges   = var.authorized_ip_ranges
+  azure_policy_enabled              = true
+  role_based_access_control_enabled = true
 
   default_node_pool {
     name                 = "default"
@@ -22,34 +24,23 @@ resource "azurerm_kubernetes_cluster" "main" {
     enable_auto_scaling  = var.enable_auto_scaling
     min_count            = var.min_count
     max_count            = var.max_count
-    availability_zones   = var.availability_zones
+    zones                = var.availability_zones
     os_disk_type         = var.os_disk_type
     os_disk_size_gb      = var.os_disk_size_gb
   }
 
-  addon_profile {
-    azure_policy {
-      enabled = true
-    }
-    kube_dashboard {
-      enabled = false
-    }
-    oms_agent {
-      enabled                    = true
-      log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
-    }
+  oms_agent {
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
   }
 
   identity {
     type = "SystemAssigned"
   }
 
-  role_based_access_control {
-    enabled = true
-    azure_active_directory {
-      managed                = true
-      admin_group_object_ids = var.admin_group_object_ids
-    }
+  azure_active_directory_role_based_access_control {
+    managed                = true
+    azure_rbac_enabled     = true
+    admin_group_object_ids = var.admin_group_object_ids
   }
 
   network_profile {
@@ -74,7 +65,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "name" {
   vm_size               = each.value.vm_size
   vnet_subnet_id        = each.value.vnet_subnet_id
   orchestrator_version  = each.value.kubernetes_version != null ? each.value.kubernetes_version : data.azurerm_kubernetes_service_versions.current.latest_version
-  availability_zones    = each.value.availability_zones
+  zones                 = each.value.availability_zones
   enable_auto_scaling   = each.value.enable_auto_scaling
   min_count             = each.value.min_count
   max_count             = each.value.max_count

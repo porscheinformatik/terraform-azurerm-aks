@@ -15,7 +15,7 @@ resource "random_string" "prefix" {
   length = 6
   special = false
   upper = false
-  number = false
+  numeric = false
 }
 
 resource "azurerm_resource_group" "main" {
