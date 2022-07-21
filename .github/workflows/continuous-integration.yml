@@ -12,14 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        terraform-versions: ["0.13.x", "0.14.x", "1.0.x"]
+        terraform-versions: ["~1.1.0", "~1.2.0", "latest"]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Setup Terraform - ${{ matrix['terraform-versions'] }}
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ matrix['terraform-versions'] }}
 
